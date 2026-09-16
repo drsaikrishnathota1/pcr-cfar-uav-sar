@@ -9,8 +9,6 @@ import numpy as np
 import torch
 
 from .cfar import ca_cfar_threshold, detect, go_cfar_threshold, os_cfar_threshold
-from .figures import draw_figure1 as _draw_figure1
-from .figures import draw_figure2 as _draw_figure2
 from .model import BlackBoxCfarNet, ResidualCfarNet
 from .sar_scene import SceneConfig, render_scene, stack_channels
 
@@ -169,12 +167,4 @@ def evaluate(ckpt_dir: Path, out_dir: Path, device: str = "cpu") -> dict:
         "clouds": {m: {"pd": summary[m]["pd"], "pfa": summary[m]["pfa"]} for m in methods},
     }
     (out_dir / "metrics.json").write_text(json.dumps(payload, indent=2))
-
-    # Figure 1 — showcase scene
-    show = render_scene(SceneConfig(target_scr_db=8.0, n_targets=5), seed=2026)
-    th = thresholds_for_scene(show, pcr, box, cfg, device)
-    fig1_path = out_dir / "fig1_detections.png"
-    _draw_figure1(show, th, fig1_path)
-    fig2_path = out_dir / "fig2_mechanism.png"
-    _draw_figure2(show, th, fig2_path, payload)
     return payload

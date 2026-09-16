@@ -14,15 +14,31 @@ Pfa-calibrated residual neural CFAR for small-target detection in cluttered UAV 
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-PYTHONPATH=src pytest
+pytest
 ```
 
-## Reproduce
+## Reproduce (one command)
+
+Checkpoints are already in `results/checkpoints/`. The default path **does not retrain**; it evaluates and redraws the two paper figures.
 
 ```bash
-PYTHONPATH=src python scripts/run_all.py      # train, evaluate, write metrics
-PYTHONPATH=src python scripts/make_figures.py # redraw Fig. 1 and Fig. 2
+python scripts/run_all.py
 ```
 
-Checkpoints: `results/checkpoints/pcr_cfar.pt`, `results/checkpoints/blackbox.pt`.  
-Metrics: `results/metrics.json`.
+That writes:
+
+- `results/metrics.json` (Tables 1–2)
+- `figures/fig1_detections.png`, `figures/fig2_operating.png`
+- copies under `paper/figures/` and `results/`
+
+To retrain from scratch (overwrites weights):
+
+```bash
+python scripts/run_all.py --train
+```
+
+Figures only, using saved weights and metrics:
+
+```bash
+python scripts/make_figures.py
+```
