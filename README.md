@@ -1,12 +1,12 @@
 # PCR-CFAR
 
-Pfa-calibrated residual neural CFAR for small-target detection in cluttered UAV SAR. Companion code, weights, metrics, and figures for the *Computers & Electrical Engineering* technical communication.
+Pfa-calibrated residual neural CFAR for small-target detection in cluttered UAV SAR. Companion code, weights, metrics, and figures for a *Computers & Electrical Engineering* research paper.
 
 ## Manuscript
 
-- Paper: [`paper/TECHNICAL_COMMUNICATION.md`](paper/TECHNICAL_COMMUNICATION.md)
+- Editorial Manager pack (upload these files): [`paper/CAEE_Editorial_Manager/`](paper/CAEE_Editorial_Manager/)
+- Working draft: [`paper/TECHNICAL_COMMUNICATION.md`](paper/TECHNICAL_COMMUNICATION.md)
 - Highlights: [`paper/highlights.txt`](paper/highlights.txt)
-- Figures: [`figures/fig1_detections.png`](figures/fig1_detections.png), [`figures/fig2_operating.png`](figures/fig2_operating.png)
 
 ## Setup
 
@@ -17,28 +17,23 @@ pip install -r requirements.txt
 pytest
 ```
 
-## Reproduce (one command)
+## Reproduce
 
-Checkpoints are already in `results/checkpoints/`. The default path **does not retrain**; it evaluates and redraws the two paper figures.
+Default: evaluate existing checkpoints and redraw all seven figures.
 
 ```bash
 python scripts/run_all.py
 ```
 
-That writes:
-
-- `results/metrics.json` (Tables 1–2)
-- `figures/fig1_detections.png`, `figures/fig2_operating.png`
-- copies under `paper/figures/` and `results/`
-
-To retrain from scratch (overwrites weights):
+Retrain (overwrites weights):
 
 ```bash
 python scripts/run_all.py --train
 ```
 
-Figures only, using saved weights and metrics:
+Figures and tables only:
 
 ```bash
-python scripts/make_figures.py
+python scripts/make_full_paper.py
+python scripts/build_submission.py
 ```
